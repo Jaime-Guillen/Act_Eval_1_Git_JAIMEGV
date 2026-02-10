@@ -201,6 +201,27 @@
       render();
     }
 
+    function deleteSelected() {
+      if(selectedId === null) {
+        setStatus("Error: No hay ninguna tarea seleccionada.", "danger");
+        return;
+      }
+
+      const before = tasks.length;
+      tasks = tasks.filter(t => t.id !== selectedId);
+
+      if (tasks.length === before){
+        // Por si selectedId apunta a una tarea que ya no existe (ej: se ha eliminado desde otra rama)
+        setStatus("No se encontró la tarea seleccionada para eliminar.", "danger");
+        selectedId = null;
+        render();
+        return;
+      }
+
+      setStatus(`Tarea con ID ${selectedId} eliminada.`, "ok");
+      selectedId = null;
+      render();
+    }
   </script>
 </body>
 </html>
